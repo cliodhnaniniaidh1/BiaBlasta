@@ -4,16 +4,13 @@ function FooterComponent(){
     return(
         <div className={styles.footer}>
             <div className={styles.footerText}>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi illo dicta impedit consequuntur quibusdam temporibus! Error, soluta quibusdam nulla dolores officia libero inventore esse blanditiis dolore quam pariatur?</p>
+                <p>Clíodhna Ní Niaidh</p>
             </div>
             <div className={styles.footerText}>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi illo dicta impedit consequuntur quibusdam temporibus! Error, soluta quibusdam nulla dolores officia libero inventore esse blanditiis dolore quam pariatur?</p>
+                <p>Project Engineering Semester 1</p>
             </div>
             <div className={styles.footerText}>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi illo dicta impedit consequuntur quibusdam temporibus! Error, soluta quibusdam nulla dolores officia libero inventore esse blanditiis dolore quam pariatur?</p>
-            </div>
-            <div className={styles.footerText}>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi illo dicta impedit consequuntur quibusdam temporibus! Error, soluta quibusdam nulla dolores officia libero inventore esse blanditiis dolore quam pariatur?</p>
+                <p>Software and Electronic Engineering Year 4</p>
             </div>
         </div>
     )

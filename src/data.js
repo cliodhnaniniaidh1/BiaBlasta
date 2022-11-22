@@ -4,15 +4,15 @@ export const navLinks = [
     name: "Home",
     path: "/"
    },
-   
+
   {
-    name: "Log In/Sign Up",
-    path: "/login",
+    name: "Pantry",
+    path: "/pantry",
   },
 
   {
-    name: "Other",
-    path: "/other",
+    name: "My Account",
+    path: "/login",
   }
     
   ];
