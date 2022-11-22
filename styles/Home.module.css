@@ -23,14 +23,14 @@
   color: white;
   font-size: 10px;
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
 }
 
 .footerText{
   padding: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
 }
 
@@ -48,5 +48,12 @@
   padding: 50px;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.image {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
 }

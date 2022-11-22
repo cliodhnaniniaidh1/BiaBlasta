@@ -29,7 +29,7 @@ header{
 }
 nav{
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   padding: 6px;
   align-items: center;
   background-color: #1abc9c;
@@ -37,8 +37,8 @@ nav{
 .nav__menu-bar{
   display: flex;
   flex-direction: column;
-  /*row-gap: 6px;
-  cursor: pointer;*/
+  row-gap: 6px;
+  cursor: pointer;
 }
 .nav__menu-bar div{
   width: 40px;
@@ -49,12 +49,12 @@ nav{
 .nav__menu-list{
   display: flex;
   flex-direction: column;
-  /*position: fixed;
+  position: fixed;
    padding: 24px 16px;
      top: 60px;
   width: 288px;
  
-  background-color: #f1f1f1;*/
+  background-color: #f1f1f1;
 }
 
 
