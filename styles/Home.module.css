@@ -1,8 +1,11 @@
 .container {
   padding: 0;
+  padding: 0;
   display: flex;
   min-height: 100vh;
+  min-height: 100vh;
   flex-direction: column;
+  justify-content: flex-start;
   justify-content: flex-start;
 }
 
@@ -12,6 +15,32 @@
   justify-content: center;
   align-items: center;
 }
+
+.header {
+  padding: 6px;
+  background: #1abc9c;
+  color: white;
+  font-size: 30px;
+}
+
+.footer{
+  margin-top: auto;
+  padding: 10px;
+  background: #0e6352;
+  color: white;
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footerText{
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 
 .title {
   display: flex;
