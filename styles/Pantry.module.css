@@ -1,6 +1,9 @@
 .container {
-    display: flex;
-    flex-direction: column;
+  padding: 0;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: flex-start;
   }
   
   .main {
@@ -8,13 +11,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  
-  .header {
-    padding: 6px;
-    background: #1abc9c;
-    color: white;
-    font-size: 30px;
   }
 
   .button {
@@ -72,4 +68,46 @@
     border-radius: 10px;
     transition: color 0.15s ease, border-color 0.15s ease;
     max-width: 500px;
+  }
+  .header{
+    padding: 6px;
+    background: #1abc9c;
+    color: white;
+    font-size: 30px;
+  }
+  
+  .footer{
+    margin-top:auto;
+    padding: 10px;
+    background: #0e6352;
+    color: white;
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .footerText{
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 800px;
+  }
+
+  .card {
+    margin: 1rem;
+    padding: 1.5rem;
+    text-align: left;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    max-width: 300px;
   }
