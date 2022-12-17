@@ -1,6 +1,9 @@
 .container {
+  padding: 0;
   display: flex;
+  min-height: 100vh;
   flex-direction: column;
+  justify-content: flex-start;
 }
 
 .main {
@@ -10,7 +13,7 @@
   align-items: center;
 }
 
-.header {
+.header{
   padding: 6px;
   background: #1abc9c;
   color: white;
@@ -18,6 +21,7 @@
 }
 
 .footer{
+  margin-top:auto;
   padding: 10px;
   background: #0e6352;
   color: white;
