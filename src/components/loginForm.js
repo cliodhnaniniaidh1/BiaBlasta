@@ -1,5 +1,5 @@
 import styles from "../../styles/Login.module.css"
-
+import Link from 'next/link'
 
 export default function LoginForm() {
     return (
@@ -15,7 +15,7 @@ export default function LoginForm() {
             </div>
 
             <div className={styles.button}>
-                Login
+               <Link href="/account">Login</Link> 
             </div>  
 
         </div>

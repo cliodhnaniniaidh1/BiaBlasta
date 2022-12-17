@@ -16,9 +16,13 @@ export default function Home() {
       </div> 
       <div className={styles.main}>
         <div className={styles.title}>
-          <h1>Search Page</h1>
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum natus voluptatem sed ad facere necessitatibus, a, modi tempore pariatur placeat sequi aperiam quo laboriosam voluptates aliquam, voluptatum quae velit laborum.</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ipsa numquam consectetur temporibus dolor at omnis? Nesciunt impedit, inventore temporibus, quis, in quos molestias totam tempora expedita exercitationem voluptatibus. Nesciunt.</p>
+          <h1>My Account</h1>
+            <p>Welcome to your Bia Blasta Account! 
+                <br/> Here you can view all your favourite recipes and plan out your weekly meals with our meal planner section
+                    <br/>Select one of the tabs to see the perks of an account!
+            </p>
+            <button>Meal Planning</button>
+            <button>Favourites</button>
         </div>
       
       </div>
