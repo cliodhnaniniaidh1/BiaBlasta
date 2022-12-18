@@ -17,6 +17,9 @@
   padding: 6px;
   background: #1abc9c;
   color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   font-size: 30px;
 }
 

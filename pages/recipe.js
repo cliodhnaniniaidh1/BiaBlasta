@@ -21,8 +21,11 @@ export default function Results() {
                 </p>
             </div>
             <div className={styles.description}>
+              {/* Find fix for long sentences, so it doesnt mess with layout of page */}
                 <p>Directions</p>
-                <p>1)Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae laboriosam provident obcaecati rerum autem, quam doloribus </p>
+                <p>1)Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae laboriosam provident obcaecati rerum autem, quam doloribus  </p>
+                <p>2)Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae laboriosam provident obcaecati rerum autem, quam doloribus </p>
+
             </div>
         </div>
       <FooterComponent></FooterComponent>

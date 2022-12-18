@@ -2,8 +2,8 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import HeaderComponent from '../src/components/Header';
 import FooterComponent from '../src/components/Footer';
-
-export default function Home() {
+import Link from 'next/link'
+export default function Account() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -21,7 +21,7 @@ export default function Home() {
                 <br/> Here you can view all your favourite recipes and plan out your weekly meals with our meal planner section
                     <br/>Select one of the tabs to see the perks of an account!
             </p>
-            <button>Meal Planning</button>
+            <Link href="/mealPlanner">Meal Planning</Link>
             <button>Favourites</button>
         </div>
       

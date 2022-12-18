@@ -1,5 +1,5 @@
 
-import styles from '../styles/Pantry.module.css'
+import styles from '../styles/Results.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
 import sample from '../images/sampleMealA.png'
@@ -16,14 +16,17 @@ export default function Results() {
         <div className={styles.main}>
             <h3>Here's what we found!</h3>
             <div className={styles.grid}>
-                <div className={styles.card}>
+                <div className={styles.card2}>
                     <Link href='/recipe'>
-                        <h2>Sample Recipe A</h2>
-                        <Image
-                            src={sample} 
-                            alt='Sample Meal A'
-                            width={400}
-                            height={400}/>
+                        <div className={styles.title}>Sample Meal A</div>
+                        <div className={styles.description}>
+                          <Image
+                              src={sample} 
+                              alt='Sample Meal A'
+                              width={300}
+                              height={300}/>
+                          <p>Description of meal to be brought in from database </p>
+                        </div>
                     </Link>
                 </div>
             </div>
