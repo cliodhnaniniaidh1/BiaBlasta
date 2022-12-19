@@ -24,11 +24,11 @@ export default function Home() {
               <h4>Meat</h4>
               <div className={styles.description}>
                 <label htmlFor="Meat">
-                    <input ref={ref} type="checkbox" id="meat" name="meat" />Chicken<br />
-                    <input ref={ref} type="checkbox" id="meat" name="meat" />Beef<br />
-                    <input ref={ref} type="checkbox" id="meat" name="meat" />Turkey<br />
-                    <input ref={ref} type="checkbox" id="meat" name="meat" />Pork<br />
-                    <input ref={ref} type="checkbox" id="meat" name="meat" />Sausage<br />
+                    <input ref={ref} type="checkbox"  />Chicken<br />
+                    <input ref={ref} type="checkbox"  />Beef<br />
+                    <input ref={ref} type="checkbox"  />Turkey<br />
+                    <input ref={ref} type="checkbox"  />Pork<br />
+                    <input ref={ref} type="checkbox"  />Sausage<br />
                 </label>
               </div>
             </div>
@@ -38,12 +38,12 @@ export default function Home() {
               <h4>Vegetables</h4>
               <div className={styles.description}>
                 <label htmlFor="Vegetables">
-                    <input ref={ref} type="checkbox" id="veg" name="veg" />Mushroom<br />
-                    <input ref={ref} type="checkbox" id="veg" name="veg" />Peppers<br />
-                    <input ref={ref} type="checkbox" id="veg" name="veg" />Onion<br />
-                    <input ref={ref} type="checkbox" id="veg" name="veg" />Carrots<br />
-                    <input ref={ref} type="checkbox" id="veg" name="veg" />Cabbage<br />
-                    <input ref={ref} type="checkbox" id="veg" name="veg" />Tomatoes<br />
+                    <input ref={ref} type="checkbox"/>Mushroom<br />
+                    <input ref={ref} type="checkbox"/>Peppers<br />
+                    <input ref={ref} type="checkbox" />Onion<br />
+                    <input ref={ref} type="checkbox"/>Carrots<br />
+                    <input ref={ref} type="checkbox" />Cabbage<br />
+                    <input ref={ref} type="checkbox" />Tomatoes<br />
                 </label>
               </div>
             </div>
@@ -53,10 +53,10 @@ export default function Home() {
           <h4>Grains</h4>
           <div className={styles.description}>
             <label htmlFor="Grains">
-                <input ref={ref} type="checkbox" id="grain" name="grain" />rice<br />
-                <input ref={ref} type="checkbox" id="grain" name="grain" />pasta<br />
-                <input ref={ref} type="checkbox" id="grain" name="grain" />noodles<br />
-                <input ref={ref} type="checkbox" id="grain" name="grain" />couscous<br />
+                <input ref={ref} type="checkbox" />rice<br />
+                <input ref={ref} type="checkbox" />pasta<br />
+                <input ref={ref} type="checkbox" />noodles<br />
+                <input ref={ref} type="checkbox"  />couscous<br />
             </label>
           </div>
         </div>
@@ -66,8 +66,8 @@ export default function Home() {
             <h4>Canned Goods</h4>
             <div className={styles.description}>
               <label htmlFor="Canned">
-                  <input ref={ref} type="checkbox" id="canned" name="canned" />Tinned Tomatoes<br />
-                  <input ref={ref} type="checkbox" id="canned" name="canned" />Coconut milk<br />
+                  <input ref={ref} type="checkbox" />Tinned Tomatoes<br />
+                  <input ref={ref} type="checkbox" />Coconut milk<br />
               </label>
             </div>
            </div>
