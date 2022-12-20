@@ -1,0 +1,27 @@
+.header{
+    padding: 6px;
+    background: #1abc9c;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 30px;
+  }
+  
+  .footer{
+    margin-top:auto;
+    padding: 10px;
+    background: #0e6352;
+    color: white;
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .footerText{
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }

@@ -75,7 +75,7 @@ export default function Home() {
         </div> 
         <div className={styles.button}>
         <Link href='/results'>
-          <p>Click Here</p>
+          <p>Next Page</p>
           </Link>
         </div>   
       </div>
