@@ -13,14 +13,6 @@
     align-items: center;
   }
   
-  .header{
-    padding: 6px;
-    background: #1abc9c;
-    color: white;
-    font-size: 30px;
-  }
-  
-  
   .title {
     display: flex;
     padding: 50px;
