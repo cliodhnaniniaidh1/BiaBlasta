@@ -52,7 +52,10 @@ export default function account() {
                   <div className={styles.text}>
                     <h4>Breakfast</h4>
                     <Link href='/recipes/OvernightOats'>
-                      <Image src={oats} />
+                      <Image src={oats} 
+                      height={200}
+                      width={200}
+                      />
                       <p>Overnight Oats</p>
                     </Link>
                   </div>
@@ -63,7 +66,9 @@ export default function account() {
                   <div className={styles.text}>
                     <h4>Dinner</h4>
                     <Link href='/recipes/ChickenCurry'>
-                      <Image src={curry} />
+                      <Image src={curry} 
+                        height={200}
+                        width={200}/>
                       <p>Chicken Curry</p>
                     </Link>
                   </div>
@@ -77,21 +82,27 @@ export default function account() {
                   <div className={styles.text}>
                   <h4>Breakfast</h4>
                     <Link href='/recipes/OvernightOats'>
-                      <Image src={oats} />
+                      <Image src={oats} 
+                        height={200}
+                        width={200}/>
                       <p>Overnight Oats</p>
                     </Link>
                   </div>
                   <div className={styles.text}>
                     <h4>Lunch</h4>
                     <Link href='/recipes/PestoPasta'>
-                      <Image src={pasta}/>
+                      <Image src={pasta}
+                        height={200}
+                        width={200}/>
                       <p>Pesto Pasta</p>
                     </Link>
                   </div>
                   <div className={styles.text}>
                     <h4>Dinner</h4>
                     <Link href='/recipes/SpaghettiBolognese'>
-                      <Image src={spag} />
+                      <Image src={spag} 
+                        height={200}
+                        width={200}/>
                       <p>Spaghetti Bolognese</p>
                     </Link>
                   </div>
