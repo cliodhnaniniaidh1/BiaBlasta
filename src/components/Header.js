@@ -1,20 +1,69 @@
-import logo from '../../images/sample.png';
-import Image from 'next/image'
+import logo from "../../images/sample.png";
+import Image from "next/image";
 import React from "react";
-import Link from "next/link"
-import styles from './Component.module.css'
+import Link from "next/link";
+import styles from "./Component.module.css";
+import { signOut, useSession } from "next-auth/react";
 
+const HeaderComponent = () => {
+  const { data: session, status } = useSession();
 
-function HeaderComponent(){
-    return(
+  if (status === "loading") {
+    return (
         <header>
-            <div className={styles.header}>
-                {/* <Image src={logo} alt="Bia Blasta logo" height={100}/> */}
-                <Link href='/'>Home</Link>
-                <Link href='/pantry'>Pantry</Link>
-                <Link href='/account'>My Account</Link>
-            </div>
-        </header>
+        <div className={styles.header}>
+          <Link href="/">Home</Link>
+          <Link href="/pantry">Pantry</Link>
+          Loading...
+        </div>
+      </header>
     )
   }
-  export default HeaderComponent;
+
+  if (status === "authenticated") {
+    return (
+      <header>
+        <div className={styles.header}>
+          <Link href="/">Home</Link>
+          <Link href="/pantry">Pantry</Link>
+          <Link href="/account">My Account</Link>
+          Signed in as {session.user.email} <br />
+          <button onClick={() => signOut()}>Sign out</button>
+        </div>
+      </header>
+    );
+  }
+  if (status === "unauthenticated") {
+    return (
+      <header>
+        <div className={styles.header}>
+          <Link href="/">Home</Link>
+          <Link href="/pantry">Pantry</Link>
+          <Link href="/api/auth/signin">
+            <p>Login</p>
+          </Link>
+        </div>
+      </header>
+    );
+  }
+};
+
+export const getServerSideProps = async (ctx) => {
+  // Check if the user is authenticated from the server
+  const session = await getSession(ctx);
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "api/auth/signin",
+      },
+      props: {},
+    };
+  }
+  return {
+    props: {
+      session,
+    },
+  };
+};
+export default HeaderComponent;

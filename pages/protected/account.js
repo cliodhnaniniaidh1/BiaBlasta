@@ -1,13 +1,13 @@
 import Head from 'next/head'
-import styles from '../styles/Account.module.css'
+import styles from '../../styles/Account.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
-import oats from '../images/overnightOats.png'
-import curry from '../images/chickenCurry.png'
-import pasta from '../images/pasta.png'
-import spag from '../images/bolognese.png'
-import HeaderComponent from '../src/components/Header';
-import FooterComponent from '../src/components/Footer';
+import oats from '../../images/overnightOats.png'
+import curry from '../../images/chickenCurry.png'
+import pasta from '../../images/pasta.png'
+import spag from '../../images/bolognese.png'
+import HeaderComponent from '../../src/components/Header';
+import FooterComponent from '../../src/components/Footer';
 
 export default function account() {
   return (
