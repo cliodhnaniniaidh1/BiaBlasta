@@ -11,9 +11,9 @@ const THIRTY_MINUTES = 30 * 60  //represents minutes in amount of seconds
 
 export default NextAuth({
   pages: {
-    signIn: '/auth/signin', //Sign in form
+    signIn: '/signin', //Sign in form
     error: '/auth/error', // Error code passed in query string as ?error=
-    verifyRequest: '/auth/verify-request', // Email sent notification
+    verifyRequest: '/verify-request', // Email sent notification
   },
   secret: process.env.SECRET,
   session: {
