@@ -11,6 +11,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
+import { FavoriteButton } from "../src/components/FavouriteButton";
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -56,6 +57,7 @@ export default function account() {
               for the week using our meal planner section!
             </p>
           </div>
+          <FavoriteButton></FavoriteButton>
           <div className={styles.title}>
             <h1>Meal Planner</h1>
             <p>
