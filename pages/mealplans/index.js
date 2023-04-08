@@ -13,7 +13,7 @@ const MealPlans = () => {
   const [selectedButton, setSelectedButton] = useState(0);
   const [formData, setFormData] = useState({
     dayOfWeek: [],
-    recipeNames: ["", "", ""],
+    recipeId: ["", "", ""],
   });
   const [recipes, setRecipes] = useState([]);
   const dayOfWeek = [
@@ -28,7 +28,7 @@ const MealPlans = () => {
 
   useEffect(() => {
     // fetch all recipes
-    fetch("http://localhost:3001/recipes")
+    fetch("http://localhost:3001/recipe")
       .then((response) => response.json())
       .then((data) => setRecipes(data))
       .catch((error) => console.log(error));
@@ -36,12 +36,12 @@ const MealPlans = () => {
 
   const handleChange = (event, index) => {
     const { name, value } = event.target;
-    const newRecipeIds = [...formData.recipeNames];
+    const newRecipeIds = [...formData.recipeId];
     newRecipeIds[index] = value;
     setFormData({
       ...formData,
       [name]: value,
-      recipeNames: newRecipeIds,
+      recipeId: newRecipeIds,
     });
   };
 
@@ -60,15 +60,17 @@ const MealPlans = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+  
+    const timestamp = Date.now(); // get the current timestamp
+  
     const existingMealPlan = checkExistingMealPlan(formData.dayOfWeek);
-
+  
     if (existingMealPlan) {
       // Update the existing meal plan
       fetch(`http://localhost:3001/mealplans/${existingMealPlan._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, timestamp }), // include the timestamp
       })
         .then((response) => response.json())
         .then((data) => {
@@ -78,7 +80,7 @@ const MealPlans = () => {
           setMealPlans(updatedMealPlans);
           setFormData({
             dayOfWeek: "",
-            recipeNames: ["", "", ""],
+            recipeId: "",
           });
         })
         .catch((error) => console.log(error));
@@ -87,19 +89,21 @@ const MealPlans = () => {
       fetch("http://localhost:3001/mealplans", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, timestamp }), // include the timestamp
       })
         .then((response) => response.json())
         .then((data) => {
           setMealPlans([...mealPlans, data]);
           setFormData({
             dayOfWeek: "",
-            recipeNames: ["", "", ""],
+            recipeId: "",
           });
+          console.log(formData)
         })
         .catch((error) => console.log(error));
     }
   };
+  
 
   return (
     <div className={styles.container}>
@@ -142,13 +146,13 @@ const MealPlans = () => {
                   <select
                     id={`recipe${index}`}
                     name={`recipe${index}`}
-                    value={formData.recipeNames[index]}
+                    value={formData.recipeId[index]}
                     onChange={(event) => handleChange(event, index)}
                     required
                   >
                     <option value="">-- Select Recipe --</option>
                     {recipes.map((recipe) => (
-                      <option key={recipe._id} value={recipe.name}>
+                      <option key={recipe._id} value={recipe._id}>
                         {recipe.name}
                       </option>
                     ))}
@@ -166,7 +170,7 @@ const MealPlans = () => {
               {mealPlans.map((mealPlan) => (
                 <li key={mealPlan._id}>
                   <strong>{mealPlan.dayOfWeek}:</strong>
-                  {mealPlan.recipeNames}
+                  {/* {mealPlan.recipeId} */}
                 </li>
               ))}
             </div>

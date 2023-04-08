@@ -1,11 +1,9 @@
 import styles from "../../styles/Recipe.module.css";
 import Link from "next/link";
-import { useUser } from '@auth0/nextjs-auth0/client'
+import { useUser } from "@auth0/nextjs-auth0/client";
 import HeaderComponent from "../../src/components/Header";
 import FooterComponent from "../../src/components/Footer";
-import React, { useState } from "react";
-import FavoriteButton from "../../src/components/FavouriteButton";
-import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 
 export const getStaticPaths = async () => {
   const res = await fetch("http://localhost:3001/recipe");
@@ -32,24 +30,49 @@ export const getStaticProps = async (context) => {
 
 const Details = ({ recipe }) => {
   const [isFavorited, setIsFavorited] = useState(false);
-  const {user} = useUser();
-  const router = useRouter();
+  const [favorites, setFavorites] = useState();
+  const { user } = useUser();
 
-  async function handleFavoriteClick(recipeId) {
+  async function handleFavoriteClick() {
+    // Save the recipe to favorites
     try {
-      const response = await fetch("http://localhost:3001/favorites", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ recipeId: recipe._id }),
-      });
+      const response = await fetch(
+        `http://localhost:3001/favorites/${recipe._id}`
+      );
 
       if (!response.ok) {
-        throw new Error("Failed to save recipe to favorites");
+        throw new Error("Failed to check if recipe is favorited");
       }
-      const favorite = await response.json();
-      setIsFavorited(true);
+
+      //checks for duplicates in database
+      const favoritesData = await response.json();
+      const recipeId = recipe._id;
+
+      const isRecipeInFavorites = favoritesData.some((favorite) => {
+        return favorite.recipeId._id === recipeId;
+      });
+
+      if (isRecipeInFavorites) {
+        console.log("This recipe is already in favorites");
+        alert("This recipe is already in favorites");
+      } else {
+        console.log("This recipe is not yet in favorites");
+        const postResponse = await fetch("http://localhost:3001/favorites", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ recipeId: recipe._id }),
+        });
+
+        if (!postResponse.ok) {
+          throw new Error("Failed to save recipe to favorites");
+        }
+
+        const favorite = await postResponse.json();
+        setFavorites(favorite);
+        setIsFavorited(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -65,9 +88,7 @@ const Details = ({ recipe }) => {
           <div className={styles.title}>
             <h3>{recipe.name}</h3>
           </div>
-          <div>
-            Login to Add to favourites
-          </div>
+          <div>Login to Add to favourites</div>
           <div className={styles.content}>
             <div className={styles.ingredients}>
               <h3>Ingredients List</h3>
@@ -107,7 +128,10 @@ const Details = ({ recipe }) => {
         </div>
         <div>
           {isFavorited ? (
-            <p>Recipe added to favorites!</p>
+            <div>
+              <p>Recipe added to favorites!</p>
+              <Link href="/account">Go to favourites</Link>
+            </div>
           ) : (
             <button onClick={handleFavoriteClick}>Add to favorites</button>
           )}
