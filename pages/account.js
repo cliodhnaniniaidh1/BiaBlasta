@@ -11,15 +11,17 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
+import { FavoriteButton } from "../src/components/FavouriteButton";
 
 export const getServerSideProps = withPageAuthRequired();
 
 export default function account() {
   const { user } = useUser();
   const [mealPlans, setMealPlans] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/mealplans")
+    fetch("http://localhost:3001/mealplans?sort=-createdAt&limit=7")
       .then((res) => res.json())
       .then((data) => {
         const sortedData = data.sort((a, b) => {
@@ -41,6 +43,55 @@ export default function account() {
       .catch((error) => console.error(error));
   }, []);
 
+  // useEffect(() => {
+  //   fetch("http://localhost:3001/mealplans")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       const sortedData = data.sort((a, b) => {
+  //         const daysOfWeek = [
+  //           "Monday",
+  //           "Tuesday",
+  //           "Wednesday",
+  //           "Thursday",
+  //           "Friday",
+  //           "Saturday",
+  //           "Sunday",
+  //         ];
+  //         return (
+  //           daysOfWeek.indexOf(a.dayOfWeek) - daysOfWeek.indexOf(b.dayOfWeek)
+  //         );
+  //       });
+  //       setMealPlans(sortedData);
+  //       console.log(data)
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/favorites")
+      .then((response) => response.json())
+      .then((data) => setFavorites(data))
+      .catch((error) => console.log(error));
+  }, []);
+
+  const handleRemoveFromFavorites = async (favoriteId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/favorites/${favoriteId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setFavorites((favorites) =>
+        favorites.filter((favorite) => favorite._id !== favoriteId)
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (user) {
     return (
       <div className={styles.container}>
@@ -55,6 +106,17 @@ export default function account() {
               Here you can see all your favourite recipe and plan out your meals
               for the week using our meal planner section!
             </p>
+          </div>
+          <div>
+            <h1>My Favourites</h1>
+            {favorites.map((fav) => (
+              <div>
+                <p>{fav.recipeId.name}</p>
+                <button onClick={() => handleRemoveFromFavorites(fav._id)}>
+                  Remove
+                </button>
+              </div>
+            ))}
           </div>
           <div className={styles.title}>
             <h1>Meal Planner</h1>
@@ -71,13 +133,13 @@ export default function account() {
               <p>Meal Planner</p>
               <div className={styles.description}>
                 <Link href="/mealplans">Create New Planner</Link>
+                <Link href={"/mealplans/edit"}>Edit</Link>
               </div>
               <div className={styles.meallist}>
                 {mealPlans.map((mealPlan) => (
                   <Card sx={{ maxWidth: 345 }}>
                     <Typography variant="h5" component="div">
                       {mealPlan.dayOfWeek}
-                      <Link href={"/mealplans/"+mealPlan._id}>Edit</Link>
                     </Typography>
 
                     {/* <CardMedia
@@ -86,7 +148,7 @@ export default function account() {
                         image="/static/images/cards/contemplative-reptile.jpg"
                         alt="green iguana"
                       /> */}
-                    {mealPlan.recipeNames.map((name, index) => (
+                    {mealPlan.recipeId.map((name, index) => (
                       <CardActionArea>
                         <Card key={index}>
                           <CardContent>
@@ -95,7 +157,9 @@ export default function account() {
                               variant="h5"
                               component="div"
                             >
-                              <Link href={'/recipe/'+name}>{name}</Link>
+                              <Link href={"/recipe/" + name._id}>
+                                {name.name}
+                              </Link>
                             </Typography>
                           </CardContent>
                         </Card>

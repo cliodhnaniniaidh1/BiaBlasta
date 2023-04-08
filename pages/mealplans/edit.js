@@ -13,35 +13,50 @@ const MealPlans = () => {
   const [selectedButton, setSelectedButton] = useState(0);
   const [formData, setFormData] = useState({
     dayOfWeek: [],
-    recipeNames: ["", "", ""],
+    recipeId: ["", "", ""],
   });
   const [recipes, setRecipes] = useState([]);
-  const dayOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
 
   useEffect(() => {
     // fetch all recipes
-    fetch("http://localhost:3001/recipes")
+    fetch("http://localhost:3001/recipe")
       .then((response) => response.json())
       .then((data) => setRecipes(data))
       .catch((error) => console.log(error));
   }, []);
 
+  useEffect(() => {
+    fetch("http://localhost:3001/mealplans")
+      .then((res) => res.json())
+      .then((data) => {
+        const sortedData = data.sort((a, b) => {
+          const daysOfWeek = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ];
+          return (
+            daysOfWeek.indexOf(a.dayOfWeek) - daysOfWeek.indexOf(b.dayOfWeek)
+          );
+        });
+        setMealPlans(sortedData);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+
   const handleChange = (event, index) => {
     const { name, value } = event.target;
-    const newRecipeIds = [...formData.recipeNames];
+    const newRecipeIds = [...formData.recipeId];
     newRecipeIds[index] = value;
     setFormData({
       ...formData,
       [name]: value,
-      recipeNames: newRecipeIds,
+      recipeId: newRecipeIds,
     });
   };
 
@@ -53,54 +68,34 @@ const MealPlans = () => {
     });
   };
 
-  //returns the existing meal plan for that day, or null if one does not exist.
-  const checkExistingMealPlan = (dayOfWeek) => {
-    return mealPlans.find((mealPlan) => mealPlan.dayOfWeek === dayOfWeek);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // find the meal plan with the selected day of week
+    const selectedMealPlan = mealPlans.find(
+      (mealPlan) => mealPlan.dayOfWeek === formData.dayOfWeek
+    );
+
+    // update the meal plan
+    fetch(`http://localhost:3001/mealplans/${selectedMealPlan._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const updatedMealPlans = mealPlans.map((mealPlan) =>
+          mealPlan._id === data._id ? data : mealPlan
+        );
+        setMealPlans(updatedMealPlans);
+        setFormData({
+          dayOfWeek: "",
+          recipeId: ["", "", ""],
+        });
+      })
+      .catch((error) => console.log(error));
   };
 
-  const handleSubmit = (event, mealPlanId) => {
-    event.preventDefault();
-  
-    const existingMealPlan = checkExistingMealPlan(formData.dayOfWeek);
-  
-    if (existingMealPlan) {
-      // Update the existing meal plan
-      fetch(`http://localhost:3001/mealplans/${mealPlanId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          const updatedMealPlans = mealPlans.map((mealPlan) =>
-            mealPlan._id === data._id ? data : mealPlan
-          );
-          setMealPlans(updatedMealPlans);
-          setFormData({
-            dayOfWeek: "",
-            recipeNames: ["", "", ""],
-          });
-        })
-        .catch((error) => console.log(error));
-    } else {
-      // Create a new meal plan
-      fetch(`http://localhost:3001/mealplans/${mealPlanId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setMealPlans([...mealPlans, data]);
-          setFormData({
-            dayOfWeek: "",
-            recipeNames: ["", "", ""],
-          });
-        })
-        .catch((error) => console.log(error));
-    }
-  };
-  
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -110,22 +105,27 @@ const MealPlans = () => {
         <div className={styles.title}>
           <h1>Meal Plans</h1>
           <p>
-            Here you can edit you're existing meal plan.
+            To get started, click on one of the days and seelct three meals from
+            the drop down menu.
+            <br />
+            Once you're happy with the selection click add to meal plan. <br />
+            Do this for each day you want a meal plan for, then click save to
+            return back to your account.
           </p>
         </div>
-        <Link href='/account'>Save & Exit</Link>
+        <Link href="/account">Save & Exit</Link>
         <div className={styles.mealplanMain}>
-          <form onSubmit={(event) => handleSubmit(event,mealPlannerId)}>
+          <form onSubmit={handleSubmit}>
             <label htmlFor="dayOfWeek">Select Day of Week:</label>
             <div className={styles.mealplanDays}>
-              {dayOfWeek.map((day) => (
+              {mealPlans.map((day) => (
                 <Button
-                  key={day}
-                  variant={selectedButton === day ? "contained" : "outlined"}
+                  key={day._id}
+                  variant={selectedButton === day.dayOfWeek ? "contained" : "outlined"}
                   color="primary"
-                  onClick={() => handleDayClick(day)}
+                  onClick={() => handleDayClick(day.dayOfWeek)}
                 >
-                  {day}
+                  {day.dayOfWeek}
                 </Button>
               ))}
             </div>
@@ -137,13 +137,13 @@ const MealPlans = () => {
                   <select
                     id={`recipe${index}`}
                     name={`recipe${index}`}
-                    value={formData.recipeNames[index]}
+                    value={formData.recipeId[index]}
                     onChange={(event) => handleChange(event, index)}
                     required
                   >
                     <option value="">-- Select Recipe --</option>
                     {recipes.map((recipe) => (
-                      <option key={recipe._id} value={recipe.name}>
+                      <option key={recipe._id} value={recipe._id}>
                         {recipe.name}
                       </option>
                     ))}
@@ -151,20 +151,25 @@ const MealPlans = () => {
                 </div>
               ))}
               <Button type="submit" color="primary">
-                Add to Meal Plan
+                Update Meal Plan
               </Button>
             </div>
           </form>
           <div className={styles.mealplanTitle}>
             <h2>Current Meal Plan</h2>
-            <div className={styles.mealpleanView}>
-                {}
-            </div>
             <div className={styles.mealplanView}>
               {mealPlans.map((mealPlan) => (
                 <li key={mealPlan._id}>
                   <strong>{mealPlan.dayOfWeek}:</strong>
-                  {mealPlan.recipeNames}
+                  {mealPlan.recipeId.map((recipeId) => (
+                    <span key={recipeId}>
+                      {
+                        recipes.find((recipe) => recipe._id === recipeId._id)
+                          ?.name
+                      }
+                      ,{" "}
+                    </span>
+                  ))}
                 </li>
               ))}
             </div>
