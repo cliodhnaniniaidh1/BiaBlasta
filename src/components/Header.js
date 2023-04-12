@@ -1,48 +1,80 @@
-import logo from "../../images/sample.png";
-import Image from "next/image";
-import React from "react";
+import * as React from "react";
 import Link from "next/link";
 import styles from "./Component.module.css";
-import { useUser } from '@auth0/nextjs-auth0/client'
+import { useUser } from "@auth0/nextjs-auth0/client";
+import logo from "./logo2.png";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  MenuItem,
+  Menu,
+} from "@mui/material";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import Image from "next/image";
 
-const HeaderComponent = () => {
+export default function MenuAppBar() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const { user } = useUser();
 
-  const {user,error,isLoading} = useUser();
-  
-  if(user){
-    return (
-      <header>
-        <div className={styles.header}>
-          <Link href="/">Home</Link>
-          <Link href="/pantry">Pantry</Link>
-          <Link href="/account">My Account</Link>
-          <Link href="/api/auth/logout">Logout</Link>
-        </div>
-      </header>
-    );
-  }
-  
-  if(isLoading) return (
-    <header>
-    <div className={styles.header}>
-      <Link href="/">Home</Link>
-      <Link href="/pantry">Pantry</Link>
-    </div>
-  </header>
-)
-  if(error) return <div>{error.message}</div>
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
-    <header>
-        <div className={styles.header}>
-          <Link href="/">Home</Link>
-          <Link href="/pantry">Pantry</Link>
-          <Link href="api/auth/login">Login</Link>
-        </div>
-      </header>
-  
-  )
-
-};
-
-export default HeaderComponent;
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar className={styles.header}>
+          <Image src={logo} width={100} height={100} href="/" />
+          <Link href='/'>Home</Link>
+          <Link href='/pantry'>Recipes</Link>
+          {user ? (
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose} href="/account">
+                  <Link href="/account">My account</Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link href="/api/auth/logout">Log Out</Link>
+                </MenuItem>
+              </Menu>
+            </div>
+          ) : (
+            <div>
+              <Link href="/api/auth/login">Login</Link>
+            </div>
+          )}
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+}
