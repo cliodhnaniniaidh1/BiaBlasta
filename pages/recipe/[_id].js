@@ -4,6 +4,9 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import HeaderComponent from "../../src/components/Header";
 import FooterComponent from "../../src/components/Footer";
 import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
 
 export const getStaticPaths = async () => {
   const res = await fetch("http://localhost:3001/recipe");
@@ -77,65 +80,31 @@ const Details = ({ recipe }) => {
       console.error(error);
     }
   }
-
-  if (!user) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <HeaderComponent></HeaderComponent>
-        </div>
-        <div className={styles.main}>
-          <div className={styles.title}>
-            <h3>{recipe.name}</h3>
-          </div>
-          <div>Login to Add to favourites</div>
-          <div className={styles.content}>
-            <div className={styles.ingredients}>
-              <h3>Ingredients List</h3>
-              <div>
-                {recipe.ingredients.map((ingredients) => {
-                  return <p>{ingredients}</p>;
-                })}
-              </div>
-            </div>
-            <div className={styles.description}>
-              <p>{recipe.description}</p>
-              <p>{recipe.catagory}</p>
-              <p>{recipe.servingSize}</p>
-              <div className={styles.steps}>
-                <div>
-                  {recipe.steps.map((steps) => {
-                    return <p>{steps}</p>;
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <FooterComponent></FooterComponent>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <HeaderComponent></HeaderComponent>
-      </div>
+      <HeaderComponent></HeaderComponent>
       <div className={styles.main}>
         <div className={styles.title}>
           <h3>{recipe.name}</h3>
         </div>
-        <div>
-          {isFavorited ? (
-            <div>
-              <p>Recipe added to favorites!</p>
-              <Link href="/account">Go to favourites</Link>
-            </div>
-          ) : (
-            <button onClick={handleFavoriteClick}>Add to favorites</button>
-          )}
-        </div>
+        ***Image***
+        {!user ? (
+          <div>Login to add to favourites</div>
+        ) : (
+          <div>
+            {isFavorited ? (
+              <div>
+                <p>Added to favorites!</p>
+              </div>
+            ) : (
+              <FontAwesomeIcon
+                onClick={handleFavoriteClick}
+                icon={faPlus}
+                style={{ color: "#f4796c" }}
+              />
+            )}
+          </div>
+        )}
         <div className={styles.content}>
           <div className={styles.ingredients}>
             <h3>Ingredients List</h3>
@@ -147,14 +116,13 @@ const Details = ({ recipe }) => {
           </div>
           <div className={styles.description}>
             <p>{recipe.description}</p>
-            <p>{recipe.catagory}</p>
-            <p>{recipe.servingSize}</p>
+            <p>Catagory: {recipe.catagory}</p>
+            <p>Serving Size: {recipe.servingSize}</p>
+
             <div className={styles.steps}>
-              <div>
-                {recipe.steps.map((steps) => {
-                  return <p>{steps}</p>;
-                })}
-              </div>
+              {recipe.steps.map((steps) => {
+                return <p>{steps}</p>;
+              })}
             </div>
           </div>
         </div>
@@ -163,5 +131,4 @@ const Details = ({ recipe }) => {
     </div>
   );
 };
-
 export default Details;

@@ -122,7 +122,6 @@ const MealPlans = () => {
                 <Button
                   key={day._id}
                   variant={selectedButton === day.dayOfWeek ? "contained" : "outlined"}
-                  color="primary"
                   onClick={() => handleDayClick(day.dayOfWeek)}
                 >
                   {day.dayOfWeek}
