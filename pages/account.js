@@ -9,8 +9,8 @@ import * as React from "react";
 import { CardActionArea, CardContent, Card } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import logo  from "../src/components/logo.png";
-import Image from "next/image"
+import logo from "../src/components/logo.png";
+import Image from "next/image";
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -108,17 +108,17 @@ export default function account() {
             <h1>My Favourites</h1>
             <div className={styles.grid}>
               {favorites.map((fav) => (
-                <Link href={"/recipe/" + fav.recipeId._id}>
-                  <div className={styles.card}>
+                <div className={styles.card}>
+                  <Link href={"/recipe/" + fav.recipeId.id}>
                     {fav.recipeId.name}
                     <p>***image***</p>
-                    <FontAwesomeIcon
+                  </Link>
+                  <FontAwesomeIcon
                       onClick={() => handleRemoveFromFavorites(fav._id)}
-                      icon={faTrashCan}
-                      style={{ color: "#f4796c" }}
-                    />
-                  </div>
-                </Link>
+                    icon={faTrashCan}
+                    style={{ color: "#f4796c" }}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -142,15 +142,10 @@ export default function account() {
                 <div className={styles.list}>
                   <CardActionArea>
                     <Card key={index}>
-                      <Image
-                        height={100}
-                        width={100}
-                        src={logo}
-                        alt="logo"
-                      />
+                      {/* <Image height={100} width={100} src='https://biablastaimage.s3.eu-west-1.amazonaws.com/food/Screenshot+2023-04-12+at+10.15.12.png' alt="logo" /> */}
                       <CardContent>
                         <p>
-                          <Link href={"/recipe/" + name._id}>{name.name}</Link>
+                          <Link href={"/recipe/" + name.id}>{name.name}</Link>
                         </p>
                       </CardContent>
                     </Card>

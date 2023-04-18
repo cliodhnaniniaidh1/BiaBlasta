@@ -1,5 +1,7 @@
 import styles from '../../styles/Results.module.css'
 import Link from 'next/link'
+import HeaderComponent from "../../src/components/Header";
+import FooterComponent from "../../src/components/Footer";
 
 export const getStaticProps = async () => {
     const res = await fetch('http://localhost:3001/recipe')
@@ -12,15 +14,23 @@ export const getStaticProps = async () => {
 
 const Recipes = ({recipes}) => {
 return(
-    <div>
-        {recipes.map(recipe => (
-        <Link href={'/recipe/'+recipe._id} key={recipe._id}>
+    <div className={styles.container}>
+      <HeaderComponent></HeaderComponent>
+      <div className={styles.main}>
+        <h3>Here's what we found!</h3>
+        <div className={styles.grid}>
+          {recipes.map((recipe) => (
             <div className={styles.card}>
-            <h3>{recipe.name}</h3>
-            <p>{recipe.description}</p>
+              <Link href={"/recipe/" + recipe.id} key={recipe.id}>
+                <p>***image***</p>
+                <h3>{recipe.name}</h3>
+                <p>{recipe.catagory}</p>
+              </Link>
             </div>
-        </Link>
-        ))}
+          ))}
+        </div>
+      </div>
+      <FooterComponent></FooterComponent>
     </div>
 
 )
