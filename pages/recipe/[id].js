@@ -1,5 +1,5 @@
 import styles from "../../styles/Recipe.module.css";
-import Link from "next/link";
+import { Image} from "next/image";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import HeaderComponent from "../../src/components/Header";
 import FooterComponent from "../../src/components/Footer";
@@ -13,7 +13,7 @@ export const getStaticPaths = async () => {
   const data = await res.json();
 
   const paths = data.map((recipe) => ({
-    params: { _id: recipe._id.toString() },
+    params: { id: recipe.id.toString() },
   }));
 
   return {
@@ -23,7 +23,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async (context) => {
-  const name = context.params._id;
+  const name = context.params.id;
   const res = await fetch("http://localhost:3001/recipe/" + name);
   const data = await res.json();
   return {
@@ -40,7 +40,7 @@ const Details = ({ recipe }) => {
     // Save the recipe to favorites
     try {
       const response = await fetch(
-        `http://localhost:3001/favorites/${recipe._id}`
+        `http://localhost:3001/favorites/${recipe.id}`
       );
 
       if (!response.ok) {
@@ -49,10 +49,10 @@ const Details = ({ recipe }) => {
 
       //checks for duplicates in database
       const favoritesData = await response.json();
-      const recipeId = recipe._id;
+      const recipeId = recipe.id;
 
       const isRecipeInFavorites = favoritesData.some((favorite) => {
-        return favorite.recipeId._id === recipeId;
+        return favorite.recipeId.id === recipeId;
       });
 
       if (isRecipeInFavorites) {
@@ -65,7 +65,7 @@ const Details = ({ recipe }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ recipeId: recipe._id }),
+          body: JSON.stringify({ recipeId: recipe.id }),
         });
 
         if (!postResponse.ok) {
@@ -87,7 +87,7 @@ const Details = ({ recipe }) => {
         <div className={styles.title}>
           <h3>{recipe.name}</h3>
         </div>
-        ***Image***
+        {/* <Image src='https://pixabay.com/get/g78fe0568cf75f8ea55e428a584de2609a6fde6c6373ecc2912fd4b2adba20840f897a470f62d1e5e2fb017b466ddd25429479b60b7e65a7dd84aa3fc4192b66ef712ad8a668d15d6d2a1f9f0c6daf77a_1920.jpg'/> */}
         {!user ? (
           <div>Login to add to favourites</div>
         ) : (
