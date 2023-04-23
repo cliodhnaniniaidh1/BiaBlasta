@@ -22,36 +22,29 @@ const IngredientSelection = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const response = await fetch("http://localhost:3001/selected-ingredients", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ingredients: selectedIngredients }),
-    });
-
-    if (response.ok) {
-      router.push("/recipe");
-    } else {
-      alert("Error saving ingredients.");
-    }
+  
+    // Convert the selectedIngredients array into a comma-separated string
+    const ingredientsString = selectedIngredients.join(',');
+  
+    // Redirect to the /recipes/search page with the ingredients as a query parameter
+    router.push(`/recipe?ingredients=${encodeURIComponent(ingredientsString)}`);
   };
-
+  
   return (
     <div className={styles.container}>
       <HeaderComponent></HeaderComponent>
       <div className={styles.main}>
         <h1>Select Ingredients</h1>
         <p>
-          The more ingredients you select the more recipes we can find for you
-          to make !
+          The more ingredients you select, the more recipes we can find for you
+          to make!
         </p>
         <div className={styles.content}>
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className={styles.buttonContent}>
               <div className={styles.button}>
-              <p onClick={handleSubmit}>Find Recipes!</p>
+                {/* <p onClick={navigateToRecipes}>Find Recipes!</p> */}
+                <p onClick={handleSubmit}>Find Recipes!</p>
               </div>
             </div>
             <div className={styles.grid}>

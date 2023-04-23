@@ -3,19 +3,28 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import HeaderComponent from "../../src/components/Header";
 import FooterComponent from "../../src/components/Footer";
+import { useRouter } from "next/router";
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
+  const router = useRouter();
+  const { ingredients } = router.query;
 
   useEffect(() => {
     const fetchRecipes = async () => {
-      const response = await fetch("http://localhost:3001/recipes/search");
+      const ingredientsParams = new URLSearchParams({
+        ingredients: ingredients,
+      }).toString();
+
+      const response = await fetch(`http://localhost:3001/recipes/search?${ingredientsParams}`);
       const data = await response.json();
       setRecipes(data);
     };
 
-    fetchRecipes();
-  }, []);
+    if (ingredients) {
+      fetchRecipes();
+    }
+  }, [ingredients]);
 
   return (
     <div className={styles.container}>
@@ -39,4 +48,5 @@ const Recipes = () => {
     </div>
   );
 };
+
 export default Recipes;
