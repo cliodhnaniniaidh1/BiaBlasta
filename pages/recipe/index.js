@@ -1,24 +1,29 @@
-import styles from '../../styles/Results.module.css'
-import Link from 'next/link'
+import styles from "../../styles/Results.module.css";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 import HeaderComponent from "../../src/components/Header";
 import FooterComponent from "../../src/components/Footer";
 
-export const getStaticProps = async () => {
-    const res = await fetch('http://localhost:3001/recipe')
-    const data = await res.json()
-  
-    return{
-      props: {recipes:data}
-    }
-}
+const Recipes = () => {
+  const [recipes, setRecipes] = useState([]);
 
-const Recipes = ({recipes}) => {
-return(
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      const response = await fetch("http://localhost:3001/recipes/search");
+      const data = await response.json();
+      setRecipes(data);
+    };
+
+    fetchRecipes();
+  }, []);
+
+  return (
     <div className={styles.container}>
       <HeaderComponent></HeaderComponent>
       <div className={styles.main}>
         <h3>Here's what we found!</h3>
         <div className={styles.grid}>
+          <h3>{recipes.title}</h3>
           {recipes.map((recipe) => (
             <div className={styles.card}>
               <Link href={"/recipe/" + recipe.id} key={recipe.id}>
@@ -32,7 +37,6 @@ return(
       </div>
       <FooterComponent></FooterComponent>
     </div>
-
-)
-}
-export default Recipes
+  );
+};
+export default Recipes;
