@@ -9,18 +9,17 @@ import * as React from "react";
 import { CardActionArea, CardContent, Card } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import logo from "../src/components/logo.png";
-import Image from "next/image";
 
 export const getServerSideProps = withPageAuthRequired();
 
 export default function account() {
   const { user } = useUser();
   const [mealPlans, setMealPlans] = useState([]);
-  const [favorites, setFavorites] = useState([]);
+  const [favourites, setFavorites] = useState([]);
+  const imageURL = "https://biablastaimage.s3.eu-west-1.amazonaws.com/food/";
 
   useEffect(() => {
-    fetch("http://localhost:3001/mealplans?sort=-createdAt&limit=7")
+    fetch("http://localhost:3001/mealplan?sort=-createdAt&limit=7")
       .then((res) => res.json())
       .then((data) => {
         const sortedData = data.sort((a, b) => {
@@ -67,7 +66,7 @@ export default function account() {
   // }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3001/favorites")
+    fetch("http://localhost:3001/favourite")
       .then((response) => response.json())
       .then((data) => setFavorites(data))
       .catch((error) => console.log(error));
@@ -76,15 +75,15 @@ export default function account() {
   const handleRemoveFromFavorites = async (favoriteId) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/favorites/${favoriteId}`,
+        `http://localhost:3001/favourite/${favoriteId}`,
         {
           method: "DELETE",
         }
       );
       const data = await response.json();
       console.log(data);
-      setFavorites((favorites) =>
-        favorites.filter((favorite) => favorite._id !== favoriteId)
+      setFavorites((favourites) =>
+        favourites.filter((favourite) => favourite._id !== favoriteId)
       );
     } catch (error) {
       console.error(error);
@@ -107,14 +106,21 @@ export default function account() {
           <div className={styles.favourite}>
             <h1>My Favourites</h1>
             <div className={styles.grid}>
-              {favorites.map((fav) => (
+              {favourites.map((fav) => (
                 <div className={styles.card}>
                   <Link href={"/recipe/" + fav.recipeId.id}>
+                    <div>
+                      <img
+                        src={imageURL + fav.recipeId.id + ".jpg"}
+                        alt="logo"
+                        height={250}
+                        width={250}
+                      />
+                    </div>
                     {fav.recipeId.name}
-                    <p>***image***</p>
                   </Link>
                   <FontAwesomeIcon
-                      onClick={() => handleRemoveFromFavorites(fav._id)}
+                    onClick={() => handleRemoveFromFavorites(fav._id)}
                     icon={faTrashCan}
                     style={{ color: "#f4796c" }}
                   />
@@ -136,23 +142,24 @@ export default function account() {
             </div>
           </div>
           {mealPlans.map((mealPlan) => (
-            <Card className={styles.mealplan}>
+            <div className={styles.mealplan}>
               <p>{mealPlan.dayOfWeek}</p>
               {mealPlan.recipeId.map((name, index) => (
                 <div className={styles.list}>
-                  <CardActionArea>
-                    <Card key={index}>
-                      {/* <Image height={100} width={100} src='https://biablastaimage.s3.eu-west-1.amazonaws.com/food/Screenshot+2023-04-12+at+10.15.12.png' alt="logo" /> */}
-                      <CardContent>
-                        <p>
-                          <Link href={"/recipe/" + name.id}>{name.name}</Link>
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </CardActionArea>
+                  <div className={styles.card2}>
+                    <Link href={"/recipe/" + name.id}>
+                      <img
+                        src={imageURL + name.id + ".jpg"}
+                        alt="logo"
+                        height={100}
+                        width={100}
+                      />
+                      <div>{name.name}</div>
+                    </Link>
+                  </div>
                 </div>
               ))}
-            </Card>
+            </div>
           ))}
         </div>
         <FooterComponent></FooterComponent>

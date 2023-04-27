@@ -42,13 +42,26 @@
   flex-direction: column;  
   justify-content: center;
   padding: 10px;
-  text-align: left;
+  text-align: center;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   width: 320px;
   height:320px;
   margin: 10px;
   background-color: #fefefe;
 
+}
+
+.card2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  padding: 10px;
+  text-align: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  width: 300px;
+  height:150px;
+  margin: 10px;
+  background-color: #fefefe;
 }
 
 .favourite{
