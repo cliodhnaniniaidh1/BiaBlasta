@@ -1,5 +1,4 @@
 import styles from "../../styles/Recipe.module.css";
-import { Image } from "next/image";
 import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import HeaderComponent from "../../src/components/Header";
@@ -14,6 +13,7 @@ const Recipe = () => {
   const { user } = useUser();
   const router = useRouter();
   const { id } = router.query;
+  const imageURL = "https://biablastaimage.s3.eu-west-1.amazonaws.com/food/";
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
@@ -95,13 +95,23 @@ const Recipe = () => {
           </div>
         )}
         <div className={styles.content}>
-          <div className={styles.ingredients}>
-            <h3>Ingredients List</h3>
-            <div>
-              {recipes.ingredients &&
-                recipes.ingredients.map((ingredient, index) => (
-                  <p key={index}>{ingredient}</p>
-                ))}
+          <div className={styles.contentLeft}>
+            <div className={styles.img}>
+              <img
+                src={imageURL + recipes.id + ".jpg"}
+                alt="logo"
+                height={250}
+                width={250}
+              />
+            </div>
+            <div className={styles.ingredients}>
+              <h3>Ingredients List</h3>
+              <div>
+                {recipes.ingredients &&
+                  recipes.ingredients.map((ingredient, index) => (
+                    <p key={index}>{ingredient}</p>
+                  ))}
+              </div>
             </div>
           </div>
           <div className={styles.description}>

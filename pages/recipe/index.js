@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
   const router = useRouter();
+  const imageURL = "https://biablastaimage.s3.eu-west-1.amazonaws.com/food/";
   const { ingredients } = router.query;
 
   useEffect(() => {
@@ -16,7 +17,9 @@ const Recipes = () => {
         ingredients: ingredients,
       }).toString();
 
-      const response = await fetch(`http://localhost:3001/recipes/search?${ingredientsParams}`);
+      const response = await fetch(
+        `http://localhost:3001/recipes/search?${ingredientsParams}`
+      );
       const data = await response.json();
       setRecipes(data);
     };
@@ -36,7 +39,12 @@ const Recipes = () => {
           {recipes.map((recipe) => (
             <div className={styles.card}>
               <Link href={"/recipe/" + recipe.id} key={recipe.id}>
-                <p>***image***</p>
+                <img
+                  src={imageURL + recipe.id + ".jpg"}
+                  alt="logo"
+                  height={250}
+                  width={250}
+                />
                 <h3>{recipe.name}</h3>
                 <p>{recipe.catagory}</p>
               </Link>

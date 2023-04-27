@@ -21,6 +21,21 @@
   align-items: center;
 }
 
+.contentLeft{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left:20px;
+  margin:10px;
+}
+
+.img{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
 .title {
   display: flex;
   padding-top: 50px; 
@@ -47,8 +62,6 @@
 
 .ingredients{
   display: flex;
-  padding-left:20px;
-  width:40%;
   flex-direction: column;
   justify-content: flex-start;
 }

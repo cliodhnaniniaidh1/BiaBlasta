@@ -28,7 +28,7 @@ const MealPlans = () => {
 
   useEffect(() => {
     // fetch all recipes
-    fetch("http://localhost:3001/recipe")
+    fetch("http://localhost:3001/recipes")
       .then((response) => response.json())
       .then((data) => setRecipes(data))
       .catch((error) => console.log(error));
@@ -67,7 +67,7 @@ const MealPlans = () => {
   
     if (existingMealPlan) {
       // Update the existing meal plan
-      fetch(`http://localhost:3001/mealplans/${existingMealPlan._id}`, {
+      fetch(`http://localhost:3001/mealplan/${existingMealPlan._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, timestamp }), // include the timestamp
@@ -86,7 +86,7 @@ const MealPlans = () => {
         .catch((error) => console.log(error));
     } else {
       // Create a new meal plan
-      fetch("http://localhost:3001/mealplans", {
+      fetch("http://localhost:3001/mealplan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, timestamp }), // include the timestamp
