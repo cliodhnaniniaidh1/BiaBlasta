@@ -2,7 +2,6 @@ import * as React from "react";
 import Link from "next/link";
 import styles from "./Component.module.css";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import logo from "./logo2.png";
 import {
   AppBar,
   Box,
@@ -16,6 +15,7 @@ import Image from "next/image";
 
 export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const logo = "https://biablastaimage.s3.eu-west-1.amazonaws.com/food/Bia+Blasta+Logo-2.png";
   const { user } = useUser();
 
   const handleMenu = (event) => {
@@ -30,7 +30,7 @@ export default function MenuAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar className={styles.header}>
-          <Image src={logo} width={100} height={100} href="/" />
+          <img src={logo} width={100} height={100} />
           <Link href='/'>Home</Link>
           <Link href='/pantry'>Recipes</Link>
           {user ? (

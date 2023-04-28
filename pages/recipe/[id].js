@@ -15,7 +15,7 @@ const Recipe = () => {
   const { id } = router.query;
   const imageURL = "https://biablastaimage.s3.eu-west-1.amazonaws.com/food/";
   const [recipes, setRecipes] = useState([]);
-
+  
   useEffect(() => {
     const fetchRecipes = async () => {
       const response = await fetch(`http://localhost:3001/recipes/${id}`);
@@ -109,7 +109,7 @@ const Recipe = () => {
               <div>
                 {recipes.ingredients &&
                   recipes.ingredients.map((ingredient, index) => (
-                    <p key={index}>{ingredient}</p>
+                    <p key={index}>{ingredient.quantity} {ingredient.name}</p>
                   ))}
               </div>
             </div>
