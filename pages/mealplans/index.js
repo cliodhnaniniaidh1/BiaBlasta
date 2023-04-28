@@ -2,8 +2,6 @@ import styles from "../../styles/Account.module.css";
 import Link from "next/link";
 import HeaderComponent from "../../src/components/Header";
 import FooterComponent from "../../src/components/Footer";
-// import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-// import { useUser } from "@auth0/nextjs-auth0/client";
 import { useState, useEffect } from "react";
 
 import Button from "@mui/material/Button";
@@ -114,11 +112,11 @@ const MealPlans = () => {
         <div className={styles.title}>
           <h1>Meal Plans</h1>
           <p>
-            To get started, click on one of the days and seelct three meals from
+            To get started, click on one of the days and select three meals from
             the drop down menu.
             <br />
             Once you're happy with the selection click add to meal plan. <br />
-            Do this for each day you want a meal plan for, then click save to
+            Do this for each day you want a meal plan, then click save to
             return back to your account.
           </p>
         </div>
@@ -169,8 +167,7 @@ const MealPlans = () => {
             <div className={styles.mealplanView}>
               {mealPlans.map((mealPlan) => (
                 <li key={mealPlan._id}>
-                  <strong>{mealPlan.dayOfWeek}:</strong>
-                  {/* {mealPlan.recipeId} */}
+                  <strong>{mealPlan.dayOfWeek}: Added to meal plan</strong>
                 </li>
               ))}
             </div>

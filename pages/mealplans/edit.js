@@ -2,8 +2,6 @@ import styles from "../../styles/Account.module.css";
 import Link from "next/link";
 import HeaderComponent from "../../src/components/Header";
 import FooterComponent from "../../src/components/Footer";
-// import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-// import { useUser } from "@auth0/nextjs-auth0/client";
 import { useState, useEffect } from "react";
 
 import Button from "@mui/material/Button";
@@ -19,14 +17,14 @@ const MealPlans = () => {
 
   useEffect(() => {
     // fetch all recipes
-    fetch("http://localhost:3001/recipe")
+    fetch("http://localhost:3001/recipes")
       .then((response) => response.json())
       .then((data) => setRecipes(data))
       .catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3001/mealplans")
+    fetch("http://localhost:3001/mealplan")
       .then((res) => res.json())
       .then((data) => {
         const sortedData = data.sort((a, b) => {
@@ -77,7 +75,7 @@ const MealPlans = () => {
     );
 
     // update the meal plan
-    fetch(`http://localhost:3001/mealplans/${selectedMealPlan._id}`, {
+    fetch(`http://localhost:3001/mealplan/${selectedMealPlan._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
@@ -105,7 +103,7 @@ const MealPlans = () => {
         <div className={styles.title}>
           <h1>Meal Plans</h1>
           <p>
-            To get started, click on one of the days and seelct three meals from
+            To get started, click on one of the days and select three meals from
             the drop down menu.
             <br />
             Once you're happy with the selection click add to meal plan. <br />
@@ -154,25 +152,6 @@ const MealPlans = () => {
               </Button>
             </div>
           </form>
-          <div className={styles.mealplanTitle}>
-            <h2>Current Meal Plan</h2>
-            <div className={styles.mealplanView}>
-              {mealPlans.map((mealPlan) => (
-                <li key={mealPlan._id}>
-                  <strong>{mealPlan.dayOfWeek}:</strong>
-                  {mealPlan.recipeId.map((recipeId) => (
-                    <span key={recipeId}>
-                      {
-                        recipes.find((recipe) => recipe._id === recipeId._id)
-                          ?.name
-                      }
-                      ,{" "}
-                    </span>
-                  ))}
-                </li>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
       <FooterComponent></FooterComponent>
