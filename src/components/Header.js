@@ -11,7 +11,6 @@ import {
   Menu,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import Image from "next/image";
 
 export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -32,7 +31,8 @@ export default function MenuAppBar() {
         <Toolbar className={styles.header}>
           <img src={logo} width={100} height={100} />
           <Link href='/'>Home</Link>
-          <Link href='/pantry'>Recipes</Link>
+          <Link href='/pantry'>Search</Link>
+          <Link href='/all-recipes'>Recipes</Link>
           {user ? (
             <div>
               <IconButton

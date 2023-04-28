@@ -6,7 +6,6 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useState, useEffect } from "react";
 import * as React from "react";
-import { CardActionArea, CardContent, Card } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
@@ -40,30 +39,6 @@ export default function account() {
       })
       .catch((error) => console.error(error));
   }, []);
-
-  // useEffect(() => {
-  //   fetch("http://localhost:3001/mealplans")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       const sortedData = data.sort((a, b) => {
-  //         const daysOfWeek = [
-  //           "Monday",
-  //           "Tuesday",
-  //           "Wednesday",
-  //           "Thursday",
-  //           "Friday",
-  //           "Saturday",
-  //           "Sunday",
-  //         ];
-  //         return (
-  //           daysOfWeek.indexOf(a.dayOfWeek) - daysOfWeek.indexOf(b.dayOfWeek)
-  //         );
-  //       });
-  //       setMealPlans(sortedData);
-  //       console.log(data)
-  //     })
-  //     .catch((error) => console.error(error));
-  // }, []);
 
   useEffect(() => {
     fetch("http://localhost:3001/favourite")

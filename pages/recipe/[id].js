@@ -8,8 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Recipe = () => {
-  const [isFavorited, setIsFavorited] = useState(false);
-  const [favorites, setFavorites] = useState();
+  const [isFavourited, setIsFavourited] = useState(false);
+  const [favourites, setFavourites] = useState();
   const { user } = useUser();
   const router = useRouter();
   const { id } = router.query;
@@ -26,31 +26,31 @@ const Recipe = () => {
     fetchRecipes();
   }, []);
 
-  async function handleFavoriteClick() {
+  async function handleFavouriteClick() {
     // Save the recipe to favorites
     try {
       const response = await fetch(
-        `http://localhost:3001/favorites/${recipes.id}`
+        `http://localhost:3001/favourite/${recipes.id}`
       );
 
       if (!response.ok) {
-        throw new Error("Failed to check if recipe is favorited");
+        throw new Error("Failed to check if recipe is favourited");
       }
 
       //checks for duplicates in database
-      const favoritesData = await response.json();
+      const favouritesData = await response.json();
       const recipeId = recipes.id;
 
-      const isRecipeInFavorites = favoritesData.some((favorite) => {
-        return favorite.recipeId.id === recipeId;
+      const isRecipeInFavourites = favouritesData.some((favourite) => {
+        return favourite.recipeId.id === recipeId;
       });
 
-      if (isRecipeInFavorites) {
-        console.log("This recipe is already in favorites");
-        alert("This recipe is already in favorites");
+      if (isRecipeInFavourites) {
+        console.log("This recipe is already in favourites");
+        alert("This recipe is already in favourites");
       } else {
-        console.log("This recipe is not yet in favorites");
-        const postResponse = await fetch("http://localhost:3001/favorites", {
+        console.log("This recipe is not yet in favourites");
+        const postResponse = await fetch("http://localhost:3001/favourite", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -59,12 +59,12 @@ const Recipe = () => {
         });
 
         if (!postResponse.ok) {
-          throw new Error("Failed to save recipe to favorites");
+          throw new Error("Failed to save recipe to favourites");
         }
 
-        const favorite = await postResponse.json();
-        setFavorites(favorite);
-        setIsFavorited(true);
+        const favourite = await postResponse.json();
+        setFavourites(favourite);
+        setIsFavourited(true);
       }
     } catch (error) {
       console.error(error);
@@ -81,13 +81,13 @@ const Recipe = () => {
           <div>Login to add to favourites</div>
         ) : (
           <div>
-            {isFavorited ? (
+            {isFavourited ? (
               <div>
-                <p>Added to favorites!</p>
+                <p>Added to favourites!</p>
               </div>
             ) : (
               <FontAwesomeIcon
-                onClick={handleFavoriteClick}
+                onClick={handleFavouriteClick}
                 icon={faPlus}
                 style={{ color: "#f4796c" }}
               />
