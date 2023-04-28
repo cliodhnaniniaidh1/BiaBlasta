@@ -1,5 +1,6 @@
 import styles from "../../styles/Results.module.css";
 import Link from "next/link";
+import Error from "./error";
 import { useState, useEffect } from "react";
 import HeaderComponent from "../../src/components/Header";
 import FooterComponent from "../../src/components/Footer";
@@ -33,24 +34,30 @@ const Recipes = () => {
     <div className={styles.container}>
       <HeaderComponent></HeaderComponent>
       <div className={styles.main}>
-        <h3>Here's what we found!</h3>
-        <div className={styles.grid}>
-          <h3>{recipes.title}</h3>
-          {recipes.map((recipe) => (
-            <div className={styles.card}>
-              <Link href={"/recipe/" + recipe.id} key={recipe.id}>
-                <img
-                  src={imageURL + recipe.id + ".jpg"}
-                  alt="logo"
-                  height={250}
-                  width={250}
-                />
-                <h3>{recipe.name}</h3>
-                <p>{recipe.catagory}</p>
-              </Link>
+        {recipes.length === 0 ? (
+          <Error />
+        ) : (
+          <>
+            <h3>Here's what we found!</h3>
+            <div className={styles.grid}>
+              <h3>{recipes.title}</h3>
+              {recipes.map((recipe) => (
+                <div className={styles.card}>
+                  <Link href={"/recipe/" + recipe.id} key={recipe.id}>
+                    <img
+                      src={imageURL + recipe.id + ".jpg"}
+                      alt="logo"
+                      height={250}
+                      width={250}
+                    />
+                    <h3>{recipe.name}</h3>
+                    <p>{recipe.catagory}</p>
+                  </Link>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
       <FooterComponent></FooterComponent>
     </div>
