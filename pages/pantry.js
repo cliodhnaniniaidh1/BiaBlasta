@@ -43,7 +43,6 @@ const IngredientSelection = () => {
           <form>
             <div className={styles.buttonContent}>
               <div className={styles.button}>
-                {/* <p onClick={navigateToRecipes}>Find Recipes!</p> */}
                 <p onClick={handleSubmit}>Find Recipes!</p>
               </div>
             </div>
