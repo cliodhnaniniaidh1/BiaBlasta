@@ -18,7 +18,7 @@ export default function account() {
   const imageURL = "https://biablastaimage.s3.eu-west-1.amazonaws.com/food/";
 
   useEffect(() => {
-    fetch("http://localhost:3001/mealplan?sort=-createdAt&limit=7")
+    fetch("http://localhost:3001/mealplan")
       .then((res) => res.json())
       .then((data) => {
         const sortedData = data.sort((a, b) => {

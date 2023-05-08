@@ -118,7 +118,7 @@ const Recipe = () => {
             <p>{recipes.description}</p>
             <p>Catagory: {recipes.catagory}</p>
             <p>Serving Size: {recipes.servingSize}</p>
-
+            <p>Source: {recipes.source}</p>
             <div className={styles.steps}>
               {recipes.steps &&
                 recipes.steps.map((step, index) => <p key={index}>{step}</p>)}
